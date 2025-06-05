@@ -1,1 +1,1 @@
-# 8-bit-verilog-cpu
+# 8 Bit Verilog CPU
