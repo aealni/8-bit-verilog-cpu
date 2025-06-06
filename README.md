@@ -95,7 +95,7 @@ Performs ADD, SUB, NAND based on `alu_op`.
 
 Holds current instruction.
 
-* Inputs: `ir_write`, `load_ir`, `instruction_in`
+* Inputs: `load_ir`, `instruction_in`
 * Output: `instruction_out`
 
 ### 7. `control_unit.v`
