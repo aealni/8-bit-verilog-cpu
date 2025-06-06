@@ -128,10 +128,9 @@ Bus is not implemented as a separate module, but controlled by `bus_sel` mux log
 | `pc_src`            | Select source for PC next value (e.g., PC + 1 for normal next, or jump address for JMP/JZ) |
 | `ir_write`          | Enable loading the Instruction Register (IR) with the fetched instruction                  |
 | `reg_write`         | Enable writing data to the register file                                                   |
-| `reg_dst`           | Select destination register address (if needed, e.g., fixed or from instruction bits)      |
 | `reg_src`           | Select source for register write data (ALU output, RAM output, immediate value)            |
 | `alu_op`            | ALU operation code to specify which ALU function (ADD, SUB, NAND)                          |
-| `alu_src1`          | Select first ALU operand source (usually register file output)                             |
+| `alu_src1`          | Select first ALU operand source                                                            |
 | `alu_src2`          | Select second ALU operand source (register file output or immediate)                       |
 | `mem_read`          | Enable read from RAM (for LOAD or instruction fetch)                                       |
 | `mem_write`         | Enable write to RAM (for STORE)                                                            |
