@@ -67,7 +67,7 @@ Top-level integration. Coordinates datapath, control, PC, IR, ALU, register file
 
 Performs ADD, SUB, NAND based on `alu_op`.
 
-* Inputs: `src1`, `src2`, `alu_op`, `imm2`, `immsel`, `write_enable`
+* Inputs: `src1`, `src2`, `alu_op`, `imm2`, `immsel`
 * Output: `result`, `zero_flag`
 
 ### 3. `register_file.v`
