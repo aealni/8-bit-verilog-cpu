@@ -164,4 +164,5 @@ Bus is not implemented as a separate module, but controlled by `bus_sel` mux log
 * Immediate values (`imm2`) are zero-extended to 8 bits.
 * Only `R0` can be written to; it acts as the accumulator.
 * All instructions are 8 bits and execute by performing a single instruction cycle step per clock cycle.
-* RAM is dual-use: instruction and data memory.
+* RAM is dual-use: instruction and data memory. We suggest using addresses after the HALT instruction to store 8 bit data.
+* PC always starts at 0 at the start of program execution.
