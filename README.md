@@ -67,15 +67,15 @@ Top-level integration. Coordinates datapath, control, PC, IR, ALU, register file
 
 Performs ADD, SUB, NAND based on `alu_op`.
 
-* Inputs: `src1`, `src2`, `alu_op[1:0]`
+* Inputs: `src1`, `src2`, `alu_op`, `imm2`, `immsel`, `write_enable`
 * Output: `result`, `zero_flag`
 
 ### 3. `register_file.v`
 
 4 registers, 8 bits each. R0 is always the destination.
 
-* Inputs: `src1_sel`, `src2_sel`, `write_enable`, `write_data`
-* Outputs: `src1_data`, `src2_data`
+* Inputs: `src_sel`, `write_enable`, `write_data`
+* Outputs: `src_data`,
 
 ### 4. `ram.v`
 
@@ -95,7 +95,7 @@ Performs ADD, SUB, NAND based on `alu_op`.
 
 Holds current instruction.
 
-* Inputs: `load_ir`, `instruction_in`
+* Inputs: `ir_write`, `load_ir`, `instruction_in`
 * Output: `instruction_out`
 
 ### 7. `control_unit.v`
