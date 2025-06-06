@@ -4,7 +4,7 @@
 
 This project implements a simple 8-bit CPU in Verilog with a compact instruction set architecture (ISA), 4 general-purpose registers, a central 8-bit RAM, and an ALU supporting three operations. The design uses a single 8-bit internal bus implicitly controlled by logic within the top-level module.
 
-The CPU fetches instructions from RAM, decodes them, performs ALU or memory operations, and updates its program counter (PC) accordingly. All instructions are completed in a single clock cycle.
+The CPU fetches instructions from RAM, decodes them, performs ALU or memory operations, and updates its program counter (PC) accordingly. All instructions are executed over multiple clock cycles.
 
 ---
 
@@ -109,7 +109,7 @@ Finite State Machine that:
 
 ## Bus Architecture
 
-An **implicit 8-bit bus** connects all major modules:
+An implicit 8-bit bus connects all major modules:
 
 * ALU output
 * RAM output
@@ -137,7 +137,7 @@ Bus is not implemented as a separate module, but controlled by `bus_sel` mux log
 
 ---
 
-## Instruction Cycle (FSM-style)
+## Instruction Cycle
 
 1. **Fetch**:
 
@@ -161,11 +161,7 @@ Bus is not implemented as a separate module, but controlled by `bus_sel` mux log
 
 ## Notes
 
-* Immediate values (`imm2`) are **zero-extended** to 8 bits.
+* Immediate values (`imm2`) are zero-extended to 8 bits.
 * Only `R0` can be written to; it acts as the accumulator.
-* All instructions are 8 bits and execute in a single clock cycle.
+* All instructions are 8 bits and execute by performing a single instruction cycle step per clock cycle.
 * RAM is dual-use: instruction and data memory.
-
----
-
-This README serves as a comprehensive guide to the CPU’s architecture, behavior, and integration logic. Let me know if you'd like block diagrams or simulation examples!
