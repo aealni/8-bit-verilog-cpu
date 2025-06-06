@@ -130,13 +130,13 @@ Bus is not implemented as a separate module, but controlled by `bus_sel` mux log
 | `reg_write`         | Enable writing data to the register file                                                   |
 | `reg_src`           | Select source for register write data (ALU output, RAM output, immediate value)            |
 | `alu_op`            | ALU operation code to specify which ALU function (ADD, SUB, NAND)                          |
-| `alu_src1`          | Select first ALU operand source                                                            |
-| `alu_src2`          | Select second ALU operand source (register file output or immediate)                       |
+| `alu_src1`          | Select first ALU operand register                                                          |
+| `alu_src2`          | Select second ALU operand register (if imm_sel = 0)                                        |
+| `zero_flag`         | Output from ALU indicating zero result (used by control unit for conditional jumps)        |
+| `imm_sel`           | Select second ALU operand type (0 for register, 1 for zero extended 2 bit immediate)       |
 | `mem_read`          | Enable read from RAM (for LOAD or instruction fetch)                                       |
 | `mem_write`         | Enable write to RAM (for STORE)                                                            |
 | `mem_addr_src`      | Select address for RAM access (PC for instruction fetch or register for data access)       |
-| `zero_flag`         | Output from ALU indicating zero result (used by control unit for conditional jumps)        |
-| `enable_pc_inc`     | Enable incrementing PC (e.g., normal sequential flow)                                      |
 | `reset`             | Reset all relevant registers and PC                                                        |
 
 ---
