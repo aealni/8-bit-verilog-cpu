@@ -81,7 +81,7 @@ Performs ADD, SUB, NAND based on `alu_op`.
 
 32 x 8-bit RAM, addressable via 5-bit address.
 
-* Inputs: `read_en`, `write_en`, `address`, `write_data`
+* Inputs: `clk`, `read_en`, `write_en`, `address`, `write_data`
 * Output: `read_data`
 
 ### 5. `pc.v`
