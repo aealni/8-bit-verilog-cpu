@@ -52,8 +52,3 @@
 `define WORD_SIZE     8
 `define ADDR_WIDTH    5     // 5-bit addressing (32 words)
 `define RAM_DEPTH     32    // 256 bits / 8 bits per word
-
-// ===================
-// Control signal width
-// ===================
-// Can be used to bundle control buses if needed
