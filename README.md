@@ -1,4 +1,4 @@
-# Custom 8-bit CPU Architecture - README
+# Custom 8-bit CPU Architecture
 
 ## Overview
 
@@ -74,8 +74,8 @@ Performs ADD, SUB, NAND based on `alu_op`.
 
 4 registers, 8 bits each. R0 is always the destination.
 
-* Inputs: `src_sel`, `write_enable`, `write_data`
-* Outputs: `src_data`
+* Inputs: `clk`, `write_enable`, `src1`, `src2`, `reg_we`, `write_data`
+* Outputs: `read_data1`, `read_data2`
 
 ### 4. `ram.v`
 
@@ -127,7 +127,7 @@ Bus is not implemented as a separate module, but controlled by `bus_sel` mux log
 | `pc_write`          | Enable writing/updating the Program Counter (PC)                                           |
 | `pc_src`            | Select source for PC next value (e.g., PC + 1 for normal next, or jump address for JMP/JZ) |
 | `ir_write`          | Enable loading the Instruction Register (IR) with the fetched instruction                  |
-| `reg_write`         | Enable writing data to the register file                                                   |
+| `reg_we`            | Enable writing data to the register file                                                   |
 | `reg_src`           | Select source for register write data (ALU output, RAM output, immediate value)            |
 | `alu_op`            | ALU operation code to specify which ALU function (ADD, SUB, NAND)                          |
 | `alu_src1`          | Select first ALU operand register                                                          |
