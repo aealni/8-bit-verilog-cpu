@@ -32,11 +32,11 @@ Use `R0` as the implicit destination.
 
 * Format: `[7:5] opcode | [4] immsel | [3:2] src1 | [1:0] src2_or_imm2`
 
-| Opcode | Mnemonic | Description           |
-| ------ | -------- | --------------------- |
-| 000    | ADD      | R0 = src1 + src2/imm2 |
-| 001    | SUB      | R0 = src1 - src2/imm2 |
-| 010    | NAND     | R0 = \~(src1 & src2)  |
+| Opcode | Mnemonic | Description            |
+| ------ | -------- | ---------------------- |
+| 000    | ADD      | R0 = src1 + src2/imm2  |
+| 001    | SUB      | R0 = src1 - src2/imm2  |
+| 010    | NAND     | src1 = \~(src1 & src2) |
 
 > Note: `immsel = 1` selects the 2-bit immediate `imm2` instead of `src2`.
 > In `NAND`, bit \[2] is reserved as `0` (padding).
@@ -166,7 +166,7 @@ Bus is not implemented as a separate module, but controlled by `bus_sel` mux log
 ## Notes
 
 * Immediate values (`imm2`) are zero-extended to 8 bits.
-* Only `R0` can be written to; it acts as the accumulator.
+* `R0` acts as the accumulator for ADD and SUB.
 * All instructions are 8 bits and execute by performing a single instruction cycle step per clock cycle.
 * RAM is dual-use: instruction and data memory. We suggest using addresses after the HALT instruction to store 8 bit data.
 * PC always starts at 0 at the start of program execution.
