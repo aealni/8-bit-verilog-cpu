@@ -23,7 +23,7 @@ task rst(); begin
 end
 endtask
 
-always #5 clk = ~clk; // 100MHz clock
+always #5 clk = ~clk; // 10ns clock
 
 initial begin
 	//init
