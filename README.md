@@ -88,7 +88,7 @@ Performs ADD, SUB, NAND based on `alu_op`.
 
 5-bit Program Counter
 
-* Inputs: `pc_write`, `next_pc`, `reset`
+* Inputs: `clk`, `pc_write`, `next_pc`, `reset`
 * Output: `pc_out`
 
 ### 6. `instruction_register.v`
