@@ -137,7 +137,7 @@ Bus is not implemented as a separate module, but controlled by `bus_sel` mux log
 | `mem_read`          | Enable read from RAM (for LOAD or instruction fetch)                                       |
 | `mem_write`         | Enable write to RAM (for STORE)                                                            |
 | `mem_addr_src`      | Select address for RAM access (PC for instruction fetch or register for data access)       |
-| `reset`             | Reset all registers, PC, and IR. Performed once at beginning of program execution.         |
+| `reset`             | Reset all registers, PC, and IR. Input.                                                      |
 
 ---
 
