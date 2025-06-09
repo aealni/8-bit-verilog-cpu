@@ -161,6 +161,14 @@ Bus is not implemented as a separate module, but controlled by `bus_sel` mux log
    * JMP/JZ update PC
    * HALT disables PC increment and all control
 
+4. **Memory**:
+
+  * 
+
+5. 
+
+  * 
+
 ---
 
 ## Notes
