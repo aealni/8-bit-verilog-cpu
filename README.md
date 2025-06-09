@@ -10,7 +10,7 @@ The CPU fetches instructions from RAM, decodes them, performs ALU or memory oper
 
 ## Key Features
 
-* 8-bit data path
+* 8-bit word size
 * 3-bit opcodes
 * 4 general-purpose registers (`R0` to `R3`)
 * Combined 256-bit RAM (32 words of 8 bits)
@@ -30,7 +30,7 @@ Each instruction is 8 bits wide.
 
 Use `R0` as the implicit destination.
 
-* Format: `[7:5] opcode | [4] immsel | [3:2] src1 | [1:0] src2_or_imm2`
+* Format: `[7:5] opcode | [4] immsel/padding | [3:2] src1 | [1:0] src2_or_imm2`
 
 | Opcode | Mnemonic | Description            |
 | ------ | -------- | ---------------------- |
@@ -39,13 +39,13 @@ Use `R0` as the implicit destination.
 | 010    | NAND     | src1 = \~(src1 & src2) |
 
 > Note: `immsel = 1` selects the 2-bit immediate `imm2` instead of `src2`.
-> In `NAND`, bit \[2] is reserved as `0` (padding).
+> In `NAND`, bit \[4] is reserved as `0` (padding).
 
 ### Non-ALU Instructions
 
 Use direct RAM addressing.
 
-* Format: `[7:5] opcode | [4:0] address/immediate`
+* Format: `[7:5] opcode | [4:0] address`
 
 | Opcode | Mnemonic | Description                    |
 | ------ | -------- | ------------------------------ |
@@ -67,7 +67,7 @@ Top-level integration. Coordinates datapath, control, PC, IR, ALU, register file
 
 Performs ADD, SUB, NAND based on `alu_op`.
 
-* Inputs: `src1`, `src2`, `alu_op`, `imm2`, `immsel`
+* Inputs: `src1`, `src2`, `imm2`, `immsel`, `alu_op`
 * Output: `result`, `zero_flag`
 
 ### 3. `register_file.v`
@@ -88,7 +88,7 @@ Performs ADD, SUB, NAND based on `alu_op`.
 
 5-bit Program Counter
 
-* Inputs: `clk`, `pc_write`, `next_pc`, `reset`
+* Inputs: `clk`, `reset`, `pc_write`, `next_pc`
 * Output: `pc_out`
 
 ### 6. `instruction_register.v`
@@ -137,7 +137,7 @@ Bus is not implemented as a separate module, but controlled by `bus_sel` mux log
 | `mem_read`          | Enable read from RAM (for LOAD or instruction fetch)                                       |
 | `mem_write`         | Enable write to RAM (for STORE)                                                            |
 | `mem_addr_src`      | Select address for RAM access (PC for instruction fetch or register for data access)       |
-| `reset`             | Reset all registers, PC, and IR                                                            |
+| `reset`             | Reset all registers, PC, and IR. Performed once at beginning of program execution.         |
 
 ---
 
@@ -171,7 +171,5 @@ Bus is not implemented as a separate module, but controlled by `bus_sel` mux log
 * RAM is dual-use: instruction and data memory. We suggest using addresses after the HALT instruction to store 8 bit data.
 * PC always starts at 0 at the start of program execution.
 * This project was tested using Intel Quartus Prime Lite 24.1 and ModelSim-Intel Starter Edition 18.1.
-
-## Contributors
 
 ## Contact
