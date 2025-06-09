@@ -32,11 +32,11 @@ Use `R0` as the implicit destination.
 
 * Format: `[7:5] opcode | [4] immsel/padding | [3:2] src1 | [1:0] src2_or_imm2`
 
-| Opcode | Mnemonic | Description            |
-| ------ | -------- | ---------------------- |
-| 000    | ADD      | R0 = src1 + src2/imm2  |
-| 001    | SUB      | R0 = src1 - src2/imm2  |
-| 010    | NAND     | src1 = \~(src1 & src2) |
+| Opcode | Mnemonic | Description              |
+| ------ | -------- | ------------------------ |
+| 000    | ADD      | src1 = src1 + src2/imm2  |
+| 001    | SUB      | src1 = src1 - src2/imm2  |
+| 010    | NAND     | src1 = \~(src1 & src2)   |
 
 > Note: `immsel = 1` selects the 2-bit immediate `imm2` instead of `src2`.
 > In `NAND`, bit \[4] is reserved as `0` (padding).
@@ -125,10 +125,10 @@ Bus is not implemented as a separate module, but controlled by `bus_sel` mux log
 | Signal              | Description                                                                                |
 | ------------------- | ------------------------------------------------------------------------------------------ |
 | `pc_write`          | Enable writing/updating the Program Counter (PC)                                           |
-| `pc_src`            | Select source for PC next value (e.g., PC + 1 for normal next, or jump address for JMP/JZ) |
+| `pc_src`            | Select source for PC next value (PC + 1 for normal next, or jump address for JMP/JZ)       |
 | `ir_write`          | Enable loading the Instruction Register (IR) with the fetched instruction                  |
 | `reg_we`            | Enable writing data to the register file                                                   |
-| `reg_src`           | Select source for register write data (ALU output, RAM output, immediate value)            |
+| `reg_src`           | Select source for register write data (ALU output or R0)                                   |
 | `alu_op`            | ALU operation code to specify which ALU function (ADD, SUB, NAND)                          |
 | `alu_src1`          | Select first ALU operand register                                                          |
 | `alu_src2`          | Select second ALU operand register (if imm_sel = 0)                                        |
@@ -137,7 +137,7 @@ Bus is not implemented as a separate module, but controlled by `bus_sel` mux log
 | `mem_read`          | Enable read from RAM (for LOAD or instruction fetch)                                       |
 | `mem_write`         | Enable write to RAM (for STORE)                                                            |
 | `mem_addr_src`      | Select address for RAM access (PC for instruction fetch or IR for data access)             |
-| `reset`             | Reset all registers, PC, and IR. Input.                                                    |
+| `reset`             | Reset all registers, PC, and IR. Control unit input.                                       |
 
 ---
 
@@ -163,18 +163,20 @@ Bus is not implemented as a separate module, but controlled by `bus_sel` mux log
 
 4. **Memory**:
 
-  * 
+  * Select IR\[4:0] for RAM address input
+  * Enable read on LOAD
+  * Enable write on STORE
 
-5. 
+5. **Writeback**:
 
-  * 
-
+  * Set control signals so LOAD always writes to R0
+  * Set control signals so ALU operations always write to src1 (IR\[4:3])
 ---
 
 ## Notes
 
 * Immediate values (`imm2`) are zero-extended to 8 bits.
-* `R0` acts as the accumulator for ADD and SUB.
+* `R0` acts as the sole source/destination for STORE/LOAD.
 * All instructions are 8 bits and execute by performing a single instruction cycle step per clock cycle.
 * RAM is dual-use: instruction and data memory. We suggest using addresses after the HALT instruction to store 8 bit data.
 * PC always starts at 0 at the start of program execution.
