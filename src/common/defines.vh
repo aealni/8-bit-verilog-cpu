@@ -22,9 +22,8 @@
 // ===================
 // reg_src options
 // ===================
-`define REG_SRC_ALU   2'b00
-`define REG_SRC_RAM   2'b01
-`define REG_SRC_IMM   2'b10
+`define REG_SRC_ALU   1'b0
+`define REG_SRC_RAM   1'b1
 
 // ===================
 // pc_src options
@@ -36,7 +35,7 @@
 // mem_addr_src options
 // ===================
 `define MEM_ADDR_PC   1'b0
-`define MEM_ADDR_IR  1'b1
+`define MEM_ADDR_IR   1'b1
 
 // ===================
 // Register file
