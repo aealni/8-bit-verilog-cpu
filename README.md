@@ -136,8 +136,8 @@ Bus is not implemented as a separate module, but controlled by `bus_sel` mux log
 | `imm_sel`           | Select second ALU operand type (0 for register, 1 for zero extended 2 bit immediate)       |
 | `mem_read`          | Enable read from RAM (for LOAD or instruction fetch)                                       |
 | `mem_write`         | Enable write to RAM (for STORE)                                                            |
-| `mem_addr_src`      | Select address for RAM access (PC for instruction fetch or register for data access)       |
-| `reset`             | Reset all registers, PC, and IR. Input.                                                      |
+| `mem_addr_src`      | Select address for RAM access (PC for instruction fetch or IR for data access)             |
+| `reset`             | Reset all registers, PC, and IR. Input.                                                    |
 
 ---
 
