@@ -22,8 +22,9 @@
 // ===================
 // reg_src options
 // ===================
-`define REG_SRC_ALU   1'b0
-`define REG_SRC_RAM   1'b1
+`define REG_SRC_ALU   2'b00
+`define REG_SRC_RAM   2'b01
+`define REG_SRC_ZERO  2'b11
 
 // ===================
 // pc_src options
