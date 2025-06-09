@@ -36,12 +36,12 @@
 // mem_addr_src options
 // ===================
 `define MEM_ADDR_PC   1'b0
-`define MEM_ADDR_REG  1'b1
+`define MEM_ADDR_IR  1'b1
 
 // ===================
 // Register file
 // ===================
-`define REG_ZERO      2'b00  // Always destination
+`define REG_ZERO      2'b00  // ADD, SUB accumulator
 `define REG_1         2'b01
 `define REG_2         2'b10
 `define REG_3         2'b11
