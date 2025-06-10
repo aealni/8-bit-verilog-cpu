@@ -14,7 +14,7 @@ The CPU fetches instructions from RAM, decodes them, performs ALU or memory oper
 * 3-bit opcodes
 * 4 general-purpose registers (`R0` to `R3`)
 * Combined 256-bit RAM (32 words of 8 bits)
-* Designated destination register `R0`
+* Designated destination register `R0` for LOAD and STORE
 * Implicit 8-bit bus used for data transfers
 * FSM-based control unit
 * Support for immediate values
@@ -116,7 +116,7 @@ An implicit 8-bit bus connects all major modules:
 * Register output
 * Bus destinations: IR, PC, Register File, RAM
 
-Bus is not implemented as a separate module, but controlled by `bus_sel` mux logic in `top.v`.
+Bus is not implemented as a separate module, but controlled by `bus_sel` logic in `top.v`.
 
 ---
 
