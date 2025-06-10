@@ -74,7 +74,7 @@ Performs ADD, SUB, NAND based on `alu_op`.
 
 4 registers, 8 bits each. R0 is always the destination.
 
-* Inputs: `clk`, `write_enable`, `src1`, `src2`, `reg_write`, `write_data`, `reset`
+* Inputs: `clk`, `write_enable`, `src1`, `src2`, `dest_reg`, `write_data`, `reset`
 * Outputs: `src1_data`, `src2_data`
 
 ### 4. `ram.v`
