@@ -131,6 +131,7 @@ Module inputs and outputs are directly connected, sometimes with MUXs to select 
 | `ir_write`          | Enable loading the Instruction Register (IR) with the fetched instruction                  |
 | `reg_we`            | Enable writing data to the register file                                                   |
 | `reg_src`           | Select source for register write data (ALU output or R0)                                   |
+| `reg_dest`          | Select destination register (LOAD/STORE for R0, src1 for ALU ops)                          |
 | `alu_op`            | ALU operation code to specify which ALU function (ADD, SUB, NAND)                          |
 | `alu_src1`          | Select first ALU operand register                                                          |
 | `alu_src2`          | Select second ALU operand register (if imm_sel = 0)                                        |
