@@ -111,10 +111,10 @@ Finite State Machine that:
 
 Module inputs and outputs are directly connected, sometimes with MUXs to select an input. The following inputs are decided by MUX logic.
 
-* PC source
-* Memory address
-* Register write data
-* ALU immediate select (integrated into the ALU module)
+* PC source (pc_src)
+* Memory address (mem_addr_src)
+* Register write data (reg_src)
+* ALU immediate select (imm_sel, integrated into the ALU module)
 
 ---
 
