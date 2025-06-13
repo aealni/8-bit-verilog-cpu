@@ -118,10 +118,14 @@ Module inputs and outputs are directly connected, sometimes with MUXs to select 
 
 ---
 
-## Control Signals
+## Control Unit Inputs and Signals
 
 | Signal              | Description                                                                                |
 | ------------------- | ------------------------------------------------------------------------------------------ |
+| `clk`               | Clock input for FSM transitions                                                            |
+| `reset`             | Reset all registers, PC, and IR. Control unit input.                                       |
+| `instruction`       | Instruction to be decoded by control unit                                                  |
+| `zero_flag`         | Output from ALU indicating zero result (control unit input for conditional jumps)          |
 | `pc_write`          | Enable writing/updating the Program Counter (PC)                                           |
 | `pc_src`            | Select source for PC next value (PC + 1 for normal next, or jump address for JMP/JZ)       |
 | `ir_write`          | Enable loading the Instruction Register (IR) with the fetched instruction                  |
@@ -130,12 +134,10 @@ Module inputs and outputs are directly connected, sometimes with MUXs to select 
 | `alu_op`            | ALU operation code to specify which ALU function (ADD, SUB, NAND)                          |
 | `alu_src1`          | Select first ALU operand register                                                          |
 | `alu_src2`          | Select second ALU operand register (if imm_sel = 0)                                        |
-| `zero_flag`         | Output from ALU indicating zero result (used by control unit for conditional jumps)        |
 | `imm_sel`           | Select second ALU operand type (0 for register, 1 for zero extended 2 bit immediate)       |
 | `mem_read`          | Enable read from RAM (for LOAD or instruction fetch)                                       |
 | `mem_write`         | Enable write to RAM (for STORE)                                                            |
 | `mem_addr_src`      | Select address for RAM access (PC for instruction fetch or IR for data access)             |
-| `reset`             | Reset all registers, PC, and IR. Control unit input.                                       |
 
 ---
 
