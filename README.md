@@ -2,9 +2,9 @@
 
 ## Overview
 
-This project implements a simple 8-bit CPU in Verilog with a compact instruction set architecture (ISA), 4 general-purpose registers, a central 8-bit RAM, and an ALU supporting three operations. The design uses a single 8-bit internal bus implicitly controlled by logic within the top-level module.
+This project implements a simple 8-bit CPU in Verilog with a compact instruction set architecture (ISA), 4 general-purpose registers, a central 8-bit RAM, and an ALU supporting three operations. The design primarily uses multiplexer logic within the top-level module to send values.
 
-The CPU fetches instructions from RAM, decodes them, performs ALU or memory operations, and updates its program counter (PC) accordingly. All instructions are executed over multiple clock cycles.
+The CPU fetches instructions from RAM, decodes them, performs ALU or memory operations, and updates its program counter (PC) accordingly. Instructions are executed over multiple clock cycles.
 
 ---
 
@@ -15,7 +15,7 @@ The CPU fetches instructions from RAM, decodes them, performs ALU or memory oper
 * 4 general-purpose registers (`R0` to `R3`)
 * Combined 256-bit RAM (32 words of 8 bits)
 * Designated destination register `R0` for LOAD and STORE
-* Implicit 8-bit bus used for data transfers
+* MUX logic for data transfers
 * FSM-based control unit
 * Support for immediate values
 * Minimal module breakdown
@@ -28,7 +28,7 @@ Each instruction is 8 bits wide.
 
 ### ALU Instructions
 
-Use `R0` as the implicit destination.
+Use `src1` as the destination.
 
 * Format: `[7:5] opcode | [4] immsel/padding | [3:2] src1 | [1:0] src2_or_imm2`
 
@@ -43,7 +43,7 @@ Use `R0` as the implicit destination.
 
 ### Non-ALU Instructions
 
-Use direct RAM addressing.
+Use direct RAM addressing. STORE and LOAD use R0 to read/write.
 
 * Format: `[7:5] opcode | [4:0] address`
 
@@ -61,7 +61,7 @@ Use direct RAM addressing.
 
 ### 1. `top.v`
 
-Top-level integration. Coordinates datapath, control, PC, IR, ALU, register file, and RAM. Contains the implicit bus logic.
+Top-level integration. Coordinates datapath, control, PC, IR, ALU, register file, and RAM. Contains the overall wiring and MUX logic.
 
 ### 2. `alu.v`
 
@@ -107,14 +107,14 @@ Finite State Machine that:
 
 ---
 
-## Bus Architecture
+## Architecture
 
-An implicit 8-bit bus connects all major modules:
+Module inputs and outputs are directly connected, sometimes with MUXs to select an input. The following inputs are decided by MUX logic.
 
-* ALU output
-* RAM output
-* Register output
-* Bus destinations: IR, PC, Register File, RAM
+* PC source
+* Memory address
+* Register write data
+* ALU immediate select (integrated into the ALU module)
 
 Bus is not implemented as a separate module, but controlled by `bus_sel` logic in `top.v`.
 
@@ -180,6 +180,7 @@ Bus is not implemented as a separate module, but controlled by `bus_sel` logic i
 * All instructions are 8 bits and execute by performing a single instruction cycle step per clock cycle.
 * RAM is dual-use: instruction and data memory. We suggest using addresses after the HALT instruction to store 8 bit data.
 * PC always starts at 0 at the start of program execution.
+* A reset signal is sent at the start of program execution.
 * This project was tested using Intel Quartus Prime Lite 24.1 and ModelSim-Intel Starter Edition 18.1.
 
 ## Contact
