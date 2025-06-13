@@ -116,8 +116,6 @@ Module inputs and outputs are directly connected, sometimes with MUXs to select 
 * Register write data
 * ALU immediate select (integrated into the ALU module)
 
-Bus is not implemented as a separate module, but controlled by `bus_sel` logic in `top.v`.
-
 ---
 
 ## Control Signals
