@@ -161,14 +161,14 @@ Module inputs and outputs are directly connected, sometimes with MUXs to select 
 
 4. **Memory**:
 
-  * Select IR\[4:0] for RAM address input
-  * Enable read on LOAD
-  * Enable write on STORE
+    * Select IR\[4:0] for RAM address input
+    * Enable read on LOAD
+    * Enable write on STORE
 
 5. **Writeback**:
 
-  * Set control signals so LOAD always writes to R0
-  * Set control signals so ALU operations always write to src1 (IR\[4:3])
+    * Set control signals so LOAD always writes to R0
+    * Set control signals so ALU operations always write to src1 (IR\[4:3])
 ---
 
 ## Notes
