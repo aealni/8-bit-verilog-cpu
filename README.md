@@ -129,7 +129,7 @@ Module inputs and outputs are directly connected, sometimes with MUXs to select 
 | `pc_write`          | Enable writing/updating the Program Counter (PC)                                           |
 | `pc_src`            | Select source for PC next value (PC + 1 for normal next, or jump address for JMP/JZ)       |
 | `ir_write`          | Enable loading the Instruction Register (IR) with the fetched instruction                  |
-| `reg_we`            | Enable writing data to the register file                                                   |
+| `reg_write`         | Enable writing data to the register file                                                   |
 | `reg_src`           | Select source for register write data (ALU output or R0)                                   |
 | `reg_dest`          | Select destination register (LOAD/STORE for R0, src1 for ALU ops)                          |
 | `alu_op`            | ALU operation code to specify which ALU function (ADD, SUB, NAND)                          |
