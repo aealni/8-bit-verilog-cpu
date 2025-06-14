@@ -124,7 +124,8 @@ Module inputs and outputs are directly connected, sometimes with MUXs to select 
 | ------------------- | ------------------------------------------------------------------------------------------ |
 | `clk`               | Clock input for FSM transitions                                                            |
 | `reset`             | Reset all registers, PC, and IR. Control unit input.                                       |
-| `instruction`       | Instruction to be decoded by control unit                                                  |
+| `instruction`       | Instruction input to be decoded by control unit                                            |
+| `pc`                | Current PC input. Used to HALT if before PC overflows.                                     |
 | `zero_flag`         | Output from ALU indicating zero result (control unit input for conditional jumps)          |
 | `pc_write`          | Enable writing/updating the Program Counter (PC)                                           |
 | `pc_src`            | Select source for PC next value (PC + 1 for normal next, or jump address for JMP/JZ)       |
