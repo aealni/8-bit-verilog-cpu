@@ -183,7 +183,7 @@ Module inputs and outputs are directly connected, sometimes with MUXs to select 
 * RAM is dual-use: instruction and data memory. We suggest using addresses after the HALT instruction to store 8 bit data.
 * PC always starts at 0 at the start of program execution.
 * A reset signal is sent at the start of program execution.
-* Programs will automatically halt after instruction 32, but may not perform the operation correctly. Programs should always include HALT.
+* CPU automatically enters HALT after executing instruction 31 (address 11111), preventing variables from updating after instruction 31's execution.
 * This project was tested using Intel Quartus Prime Lite 24.1 and ModelSim-Intel Starter Edition 18.1.
 
 ## Contact
