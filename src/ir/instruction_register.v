@@ -1,7 +1,7 @@
 `include "../common/defines.vh"
 module instruction_register(
 	input 				clk,
-	input					reset,
+	input					reset,	// clear IR
 	input					load_ir,				// load enable
 	input			[7:0]	instruction_in,	// instruction to be loaded
 	output reg	[7:0]	instruction_out	// instruction held in IR
