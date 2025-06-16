@@ -1,0 +1,22 @@
+01110000	// load A from RAM to R0
+00000100	// copy A to R1
+01110001	// load B from RAM to R0
+01000001	// R0 NAND R1 > R0
+00001000	// copy R0 to R2
+01110001	// reload B to R0
+01000010	// R0 NAND R2 > R0
+01000110	// R1 NAND R2 > R1
+01000001	// R0 NAND R1 = SUM (R0)
+01001010	// R2 NAND R2 = carry (R2)
+10010010	// store R0 to ram
+01010000	// clear R0 with nand
+01000000
+00000010	// copy R2 to R0
+10010011	// store R0 to ram
+11111111	// halt
+00000001	// A value (10000)
+00000001	// B value (10001)
+11111111	// store sum (10010)
+11111111	// store Cin (10011)
+
+// 1 bit half adder in NAND, loads from RAM, stores back in RAM

@@ -1,0 +1,18 @@
+00011111	// computes first 7 numbers of the Fibonacci sequence starting with 1, stores in last line, use R0 as counter and R3 to count cycles
+00011111	// R3 = 6
+00010001	// start R0, R1, R2 at 1
+00010101
+00011001
+01011000	// clear R2 w nand, begin loop ----------------------------------------------------------
+01001010
+00001000	// add R0 to R2
+00000001	// add R1 to R0 
+01010100	// clear R1 w/ nand (nand w/ 0 and nand result with self)
+01000101
+00000110	// add R2 to R1
+00111101	// sub 1 from R3
+11001111	// jz to store if R3 = 0
+10100101	// jump back to loop beginning ------------------------------------------------------------
+10011111	// store R0 val @ 31
+11111111	// halt
+// R0 stores current value, R1 stores prev value, R2 acts as a buffer to allow R1 to remain 1 step behind
