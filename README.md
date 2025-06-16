@@ -184,6 +184,7 @@ Module inputs and outputs are directly connected, sometimes with MUXs to select 
 * PC always starts at 0 at the start of program execution.
 * A reset signal is sent at the start of program execution.
 * CPU automatically enters HALT after executing instruction 31 (address 11111), preventing variables from updating after instruction 31's execution.
+* ALU output and RAM output use implicit registers (not shown in datapath) to store values that would otherwise be cleared during the state transition to WRITEBK.
 * This project was tested using Intel Quartus Prime Lite 24.1 and ModelSim-Intel Starter Edition 18.1.
 
 ## Contact
