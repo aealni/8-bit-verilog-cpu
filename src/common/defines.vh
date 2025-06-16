@@ -18,12 +18,13 @@
 `define ALU_ADD       2'b00
 `define ALU_SUB       2'b01
 `define ALU_NAND      2'b10
+`define ALU_NULL      2'b11
 
 // ===================
 // reg_src options
 // ===================
 `define REG_SRC_ALU   1'b0
-`define REG_SRC_ZERO  1'b1
+`define REG_SRC_RAM   1'b1
 
 // ===================
 // pc_src options
