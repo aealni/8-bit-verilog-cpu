@@ -6,7 +6,7 @@ reg clk;
 reg write_enable;
 reg [1:0] src1;
 reg [1:0] src2;
-reg [1:0] reg_write;
+reg [1:0] dest_reg;
 reg [7:0] write_data;
 reg		 reset;
 
@@ -18,7 +18,7 @@ register_file uut (
    .write_enable(write_enable),
    .src1(src1),
    .src2(src2),
-	.reg_write(reg_write),
+	.dest_reg(dest_reg),
    .write_data(write_data),
    .reset(reset),
    .src1_data(src1_data),
@@ -43,7 +43,7 @@ initial begin
 	write_enable = 0;
 	src1 = 2'd0;
 	src2 = 2'd1;
-	reg_write = 2'd0;
+	dest_reg = 2'd0;
 	write_data = 8'd0;
 	reset = 0;
 	
@@ -58,7 +58,7 @@ initial begin
 	// case 2: write to reg 0
 	rst();
 	write_enable = 1;
-	reg_write = 2'd0;
+	dest_reg = 2'd0;
 	write_data = 8'd255;
 	#10
 	if (src1_data !== 8'd255)
@@ -67,7 +67,7 @@ initial begin
 	// case 3: write to reg 1
 	rst();
 	write_enable = 1;
-	reg_write = 2'd1;
+	dest_reg = 2'd1;
 	write_data = 8'd255;
 	#10
 	if (src2_data !== 8'd255)
@@ -77,7 +77,7 @@ initial begin
 	rst();
 	src1 = 2'd2;
 	write_enable = 1;
-	reg_write = 2'd2;
+	dest_reg = 2'd2;
 	write_data = 8'd255;
 	#10
 	if (src1_data !== 8'd255)
@@ -87,7 +87,7 @@ initial begin
 	rst();
 	src2 = 2'd3;
 	write_enable = 1;
-	reg_write = 2'd3;
+	dest_reg = 2'd3;
 	write_data = 8'd255;
 	#10
 	if (src2_data !== 8'd255)
@@ -98,7 +98,7 @@ initial begin
 	write_enable = 0;
 	src1 = 2'd0;
 	src2 = 2'd1;
-	reg_write = 2'd0;
+	dest_reg = 2'd0;
 	write_data = 8'd255;
 	#10;
 	if (src1_data == 8'd255)
