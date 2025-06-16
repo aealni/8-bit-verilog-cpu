@@ -23,7 +23,6 @@ ram uut (
 // clock generation
 always #5 clk = ~clk; // 10ns period
 
-// this file tested with initial load mem[0] and mem[1] = 8'd0
 initial begin
 	$display("Starting RAM Test");
 	clk = 0;
