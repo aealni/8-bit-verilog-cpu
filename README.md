@@ -132,6 +132,7 @@ Module inputs and outputs are directly connected, sometimes with MUXs to select 
 * Memory address (mem_addr_src)
 * Register write data (reg_src)
 * ALU immediate select (imm_sel, integrated into the ALU module)
+
 ![datapath image](docs/datapath.png)
 
 ---
