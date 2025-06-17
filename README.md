@@ -2,7 +2,7 @@
 
 ## Overview
 
-This project implements a simple 8-bit CPU in Verilog with a compact instruction set architecture (ISA), 4 general-purpose registers, a central 8-bit RAM, and an ALU supporting three operations. The design primarily uses multiplexer logic within the top-level module to send values.
+This project implements a simple 8-bit CPU in Verilog with a compact instruction set architecture (ISA), 4 general-purpose registers, a central 4x8-bit RAM, and an ALU supporting three operations. The design primarily uses multiplexer logic within the top-level module to send values.
 
 The CPU fetches instructions from RAM, decodes them, performs ALU or memory operations, and updates its program counter (PC) accordingly. Instructions are executed over multiple clock cycles, with each state in the control FSM taking one clock cycle.
 
