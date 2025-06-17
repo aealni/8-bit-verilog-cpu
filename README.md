@@ -1,4 +1,4 @@
-# Custom 8-bit CPU Architecture
+# Custom 8-bit Verilog CPU
 
 ## Overview
 
