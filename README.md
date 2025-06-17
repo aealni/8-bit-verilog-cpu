@@ -69,13 +69,18 @@ Performs ADD, SUB, NAND based on `alu_op`.
 
 * Inputs: `src1`, `src2`, `imm2`, `imm_sel`, `alu_op`
 * Output: `result`, `zero_flag`
+* Besides the 3 operations, ALU takes in 2'b11 as its default state ALU_NULL, where result and zero flag are not updated.
+* Updates asynchronously.
 
 ### 3. `register_file.v`
 
-4 registers, 8 bits each. R0 is always the destination.
+4 registers, 8 bits each. R0 is always source/destination register for STORE/LOAD.
 
 * Inputs: `clk`, `write_enable`, `src1`, `src2`, `dest_reg`, `write_data`, `reset`
 * Outputs: `src1_data`, `src2_data`
+* 4 8-bit general purpose registers.
+* Written to during WRITEBK state.
+* Synchronus writes and asynchronous reads.
 
 ### 4. `ram.v`
 
@@ -83,6 +88,9 @@ Performs ADD, SUB, NAND based on `alu_op`.
 
 * Inputs: `clk`, `read_en`, `write_en`, `address`, `write_data`
 * Output: `read_data`
+* 5 bit address (32 addresses) storing 8 bits each.
+* Manually accessed during MEM state, automatically accessed at FETCH to retrieve instruction.
+* Synchronus writes and asynchronous reads.
 
 ### 5. `pc.v`
 
@@ -90,6 +98,9 @@ Performs ADD, SUB, NAND based on `alu_op`.
 
 * Inputs: `clk`, `reset`, `pc_write`, `next_pc`
 * Output: `pc_out`
+* Stores one 5 bit address.
+* Iterates at FETCH, so always 1 ahead of current instruction's address.
+* Updates synchronously.
 
 ### 6. `instruction_register.v`
 
@@ -97,13 +108,19 @@ Holds current instruction.
 
 * Inputs: `clk`, `reset`, `load_ir`, `instruction_in`
 * Output: `instruction_out`
+* Holds current 8 bit instruction.
+* Updates during FETCH.
+* Updates synchronously.
 
 ### 7. `control_unit.v`
 
 Finite State Machine that:
 
-* Decodes opcode
-* Generates control signals (see below)
+* Inputs: `clk`, `reset`, `instruction`, `zero_flag`, `pc`
+* Decodes opcode.
+* Automatically halts execution after instruction at address 5'b11111 if no halt prior.
+* All control signals are reset to default values between state transitions.
+* Generates control signals (see below).
 
 ---
 
@@ -115,53 +132,50 @@ Module inputs and outputs are directly connected, sometimes with MUXs to select 
 * Memory address (mem_addr_src)
 * Register write data (reg_src)
 * ALU immediate select (imm_sel, integrated into the ALU module)
+![datapath image](docs/datapath.png)
 
 ---
 
 ## Control Unit Inputs and Signals
 
-| Signal              | Description                                                                                |
-| ------------------- | ------------------------------------------------------------------------------------------ |
-| `clk`               | Clock input for FSM transitions                                                            |
-| `reset`             | Reset all registers, PC, and IR. Control unit input.                                       |
-| `instruction`       | Instruction input to be decoded by control unit                                            |
-| `pc`                | Current PC input. Used to HALT if before PC overflows.                                     |
-| `zero_flag`         | Output from ALU indicating zero result (control unit input for conditional jumps)          |
-| `pc_write`          | Enable writing/updating the Program Counter (PC)                                           |
-| `pc_src`            | Select source for PC next value (PC + 1 for normal next, or jump address for JMP/JZ)       |
-| `ir_write`          | Enable loading the Instruction Register (IR) with the fetched instruction                  |
-| `reg_write`         | Enable writing data to the register file                                                   |
-| `reg_src`           | Select source for register write data (ALU output or R0)                                   |
-| `reg_dest`          | Select destination register (LOAD/STORE for R0, src1 for ALU ops)                          |
-| `alu_op`            | ALU operation code to specify which ALU function (ADD, SUB, NAND)                          |
-| `alu_src1`          | Select first ALU operand register                                                          |
-| `alu_src2`          | Select second ALU operand register (if imm_sel = 0)                                        |
-| `imm_sel`           | Select second ALU operand type (0 for register, 1 for zero extended 2 bit immediate)       |
-| `mem_read`          | Enable read from RAM (for LOAD or instruction fetch)                                       |
-| `mem_write`         | Enable write to RAM (for STORE)                                                            |
-| `mem_addr_src`      | Select address for RAM access (PC for instruction fetch or IR for data access)             |
+| Signal              | Description                                                                                | Size |
+| ------------------- | ------------------------------------------------------------------------------------------ | 1    |
+| `pc_write`          | Enable writing/updating the Program Counter (PC)                                           | 1    |
+| `pc_src`            | Select source for PC next value (PC + 1 for normal next, or jump address for JMP/JZ)       | 1    |
+| `ir_write`          | Enable loading the Instruction Register (IR) with the fetched instruction                  | 1    |
+| `reg_write`         | Enable writing data to the register file                                                   | 1    |
+| `reg_src`           | Select source for register file write data (ALU output or RAM)                             | 1    |
+| `reg_dest`          | Select destination register (LOAD/STORE for R0, src1 for ALU ops)                          | 2    |
+| `alu_op`            | ALU operation code to specify which ALU function (ADD, SUB, NAND)                          | 2    |
+| `alu_src1`          | Select first ALU operand register                                                          | 2    |
+| `alu_src2`          | Select second ALU operand register (if imm_sel = 0)                                        | 2    |
+| `imm_sel`           | Select second ALU operand type (0 for register, 1 for zero extended 2 bit immediate)       | 1    |
+| `mem_read`          | Enable read from RAM (for LOAD or instruction fetch)                                       | 1    |
+| `mem_write`         | Enable write to RAM (for STORE)                                                            | 1    |
+| `mem_addr_src`      | Select address for RAM access (PC for instruction fetch or IR for data access)             | 1    |
 
 ---
 
 ## Instruction Cycle
 
+![state diagram](docs/fsm.png)
+
 1. **Fetch**:
 
    * PC addresses RAM
    * Load instruction into IR
-   * Increment PC unless overwritten (e.g., JMP/JZ)
+   * Increment PC unless overwritten (JMP/JZ)
 
 2. **Decode**:
 
    * Decode `opcode` from IR
-   * Generate all control signals accordingly
+   * Set next state accordingly
 
 3. **Execute**:
 
    * ALU op → result stored in R0
    * LOAD/STORE interact with RAM
    * JMP/JZ update PC
-   * HALT disables PC increment and all control
 
 4. **Memory**:
 
@@ -188,3 +202,4 @@ Module inputs and outputs are directly connected, sometimes with MUXs to select 
 * This project was tested using Intel Quartus Prime Lite 24.1 and ModelSim-Intel Starter Edition 18.1.
 
 ## Contact
+Email: tylerli3@illinois.edu
