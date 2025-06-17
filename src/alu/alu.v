@@ -20,7 +20,7 @@ always@(*) begin
 		`ALU_ADD: 	result = src1 + operand2;
 		`ALU_SUB: 	result = src1 - operand2;
 		`ALU_NAND: 	result = ~(src1 & operand2);
-		`ALU_NULL:	result = 8'd0;
+		`ALU_NULL:	result = result;
 		default: result = 8'd0;
 	endcase
 	
