@@ -16,6 +16,7 @@ The CPU fetches instructions from RAM, decodes them, performs ALU or memory oper
 * Combined 256-bit RAM (32 words of 8 bits)
 * Designated destination register `R0` for LOAD and STORE
 * MUX logic for data transfers
+* Conditional and unconditional branching
 * FSM-based control unit
 * Support for immediate values
 * Minimal module breakdown
@@ -39,7 +40,6 @@ Use `src1` as the destination.
 | 010    | NAND     | src1 = \~(src1 & src2)   |
 
 > Note: `immsel = 1` selects the 2-bit immediate `imm2` instead of `src2`.
-> In `NAND`, bit \[4] is reserved as `0` (padding).
 
 ### Non-ALU Instructions
 
@@ -190,6 +190,26 @@ Module inputs and outputs are directly connected, sometimes with MUXs to select 
     * Set control signals so ALU operations always write to src1 (IR\[4:3])
 ---
 
+## Limitations and Future Work
+
+### Limitations
+* No interrupt handling
+* No hazard detection
+* Fixed 5 bit PC/RAM
+
+### Possible improvements
+* Increase word/instruction size & larger opcode
+* Implement pipelining optimizations
+* Add stack support (PUSH/POP)
+* Add software traps
+* Power optimization (disabling unused modules, FSM encoding, resource sharing)
+* Develop custom assembler for the ISA (assembly, C)
+* Develop custom interactive debugger
+* FPGA implementation
+* Implement internal bus for wiring simplicity
+
+---
+
 ## Notes
 
 * Immediate values (`imm2`) are zero-extended to 8 bits.
@@ -200,7 +220,10 @@ Module inputs and outputs are directly connected, sometimes with MUXs to select 
 * A reset signal is sent at the start of program execution.
 * CPU automatically enters HALT after executing instruction 31 (address 11111), preventing variables from updating after instruction 31's execution.
 * ALU output and RAM output use implicit registers (not shown in datapath) to store values that would otherwise be cleared during the state transition to WRITEBK.
+* To simulate, change the program filepath in ram.v and run the testbench for the top level module.
 * This project was tested using Intel Quartus Prime Lite 24.1 and ModelSim-Intel Starter Edition 18.1.
+
+---
 
 ## Contact
 Email: tylerli3@illinois.edu
