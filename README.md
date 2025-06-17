@@ -196,6 +196,7 @@ Module inputs and outputs are directly connected, sometimes with MUXs to select 
 * No interrupt handling
 * No hazard detection
 * Fixed 5 bit PC/RAM
+* Limited ISA
 
 ### Possible improvements
 * Increase word/instruction size & larger opcode
